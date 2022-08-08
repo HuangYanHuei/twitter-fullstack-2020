@@ -23,16 +23,23 @@
         <div class="head d-flex">
           <div class="" style="border-bottom:1px solid #E6ECF0;">
             <div style="position:relative;left:80px; top:20px;">
-              <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
-                class="tweet-user-avatar"
-                style="width:50px;height:50px;display:inline-block; position:relative;right:83px;" alt="Picture">
+              <a class="" href="/users/{{tweet.User.id}}/tweets">
+                <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+                  class="tweet-user-avatar"
+                  style="width:50px;height:50px;display:inline-block; position:relative;right:83px;" alt="Picture">
+              </a>
               <div style="position:relative;bottom:50px;right:20px;">
-                <p class="name">{{tweet.User.name}}</p>
-                <p class="account">@{{tweet.User.account}}</p>
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="name">{{tweet.User.name}}</p>
+                </a>
+                <a class="" href="/users/{{tweet.User.id}}/tweets">
+                  <p class="account">@{{tweet.User.account}}</p>
+                </a>
+
               </div>
             </div>
             <p
-              style="height:100px;width:600px; position:relative;bottom:10px;font-size:20px;line-height: 36px;font-weight: 400;word-wrap:break-word;">
+              style="height:100px;width:600px; position:relative;bottom:10px;font-size:20px;line-height:36px;font-weight:400;word-wrap:break-word;">
               {{tweet.description}}</p>
             <p style="color:#6C757D;font-size:14px;">{{momentTime
               tweet.createdAt}}．{{momentDate tweet.createdAt}}</p>
@@ -57,18 +64,28 @@
         <div class="d-flex" style="margin-top:16px;">
           <button style="position:relative;bottom:5px;">
             <img src="/images/comment.png" style="width:25px;height:25px;position:relative;top:5px;" alt="comment"
-              data-bs-toggle="modal" data-bs-target="#tweet-reply-model">
+              data-bs-toggle="modal" data-bs-target="#tweet-reply-model" class="hover-bigger-icon">
           </button>
           {{#if isLiked}}
           <form action="/tweets/{{tweet.id}}/unlike" method="POST">
             <button style="position:relative;left:90px; top:2px">
-              <img src="/images/redLove.png" style="width:25px;height:25px;" alt="like">
+              <div class="d-flex lock">
+                <img src="/images/like.png" style="width:25px;height:25px;margin-right:8px" alt="unlike"
+                  class="icon-lock">
+                <img src="/images/redLove.png" style="width:25px;height:25px;margin-right:8px" alt="unlike"
+                  class="icon-unlock">
+              </div>
             </button>
           </form>
           {{else}}
           <form action="/tweets/{{tweet.id}}/like" method="POST">
-            <button style="position:relative;left:90px;top:2px">
-              <img src="/images/like.png" style="width:25px;height:25px;" alt="unlike">
+            <button style="position:relative;left:90px;top:2px" onclick="notifyForAllSubscribers ()">
+              <div class="d-flex lock">
+                <img src="/images/like.png" style="width:25px;height:25px;margin-right:8px" alt="unlike"
+                  class="icon-unlock">
+                <img src="/images/redLove.png" style="width:25px;height:25px;margin-right:8px" alt="unlike"
+                  class="icon-lock">
+              </div>
             </button>
           </form>
           {{/if}}
@@ -80,8 +97,10 @@
       top:25px; border-top:1px solid #E6ECF0;">
         {{#each tweet.Replies}}
         <div class=" tweet-card d-flex" style="margin:0px;">
-          <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}" alt="Picture"
-            class="tweet-user-avatar">
+          <a class="" href="/users/{{this.User.id}}/tweets">
+            <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}/images/icon/logo-gray.png{{/if}}"
+              alt="Picture" class="tweet-user-avatar">
+          </a>
           <div>
             <div class="head d-flex">
               <a class="name" href="/users/:{{this.User.id}}">{{this.User.name}}</a>
@@ -120,7 +139,7 @@
                     <div class="time color-secondaryColor">•{{momentNow this.createdAt}}</div>
                   </div>
                 </div>
-                <div class="content" style="position:relative; left:63px;word-wrap: break-word;">
+                <div class="content" style="position:relative; left:63px;word-wrap:break-word;">
                   {{tweet.description}}
                 </div>
                 <div class="content" style="position:relative; left:63px;top:15px;">
@@ -143,7 +162,7 @@
                     <div id="c" class="c-number-check">內容不可空白</div>
                     <div id="a" class="a-number-check">0/140</div>
                   </div>
-                  <button type="submit" class="btn btn-orange btn-tweets-models"
+                  <button type="submit" class="btn btn-orange btn-tweets-models" onclick="notifyForAllSubscribers ()"
                     style="border-radius: 50px;position:relative; left:550px;top:130px;">
                     <span class="" style="font-size:16px;">回覆</span>
                   </button>

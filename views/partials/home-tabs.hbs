@@ -22,6 +22,18 @@
               </div>
             </a>
           </li>
+          <li class="nav-item flex-nowrap-element mb-2">
+            <a class="nav-link text-dark" id="tab-notification" href="/notice">
+              <div class="d-flex">
+                {{#ifCond route 'notice'}}
+                <img src="/images/notice-orange.png" alt="icon">
+                {{else}}
+                <img src="/images/notice.png" alt="icon">
+                {{/ifCond}}
+                <span class="h5 h-orange {{#ifCond route 'notice'}}color-mask{{/ifCond}}">&nbsp;&nbsp;&nbsp;通知</span>
+              </div>
+            </a>
+          </li>
           <li class="nav-item flex-nowrap-element">
             <a class="nav-link text-dark" href="/message">
               <div class="d-flex">
@@ -99,7 +111,7 @@
             </div>
             <div class="count name-count-tab"><span>0/140</span></div>
           </div>
-          <button type="submit" class="btn btn-orange btn-tweets-models"
+          <button type="submit" class="btn btn-orange btn-tweets-models" onclick="notifyForAllSubscribers () "
             style="border-radius: 50px;position:relative; left:550px;bottom:20px;">
             <span class="" style="font-size:16px;">推文</span>
           </button>
@@ -110,7 +122,7 @@
   <!-- 新增 tweet Modal 結束 -->
 
   <script>
-    function countsTab() {
+    function countsTab () {
       const counts = document.querySelector('#description').value.length
       document.querySelector('.name-count-tab span').innerText = counts + '/140'
       if (counts > 140) {
@@ -124,7 +136,7 @@
         document.querySelector('.name-helper-tab span').innerText = '內容不可空白'
       }
     }
-    function checkformTab() {
+    function checkformTab () {
       const counts = document.querySelector('#description').value.length
       if (counts > 140) {
         alert('字數超出上限！')
@@ -149,7 +161,7 @@
         // allowOutsideClick: false
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "/logout";
+          window.location.href = "/logout"
         }
       })
     });
