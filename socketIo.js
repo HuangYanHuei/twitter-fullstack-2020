@@ -17,7 +17,6 @@ io.of('/all_chatroom').on('connection', async socket => {
 
   // -------------- Login 事件
   socket.on('login', () => {
-    console.log(`${chattingUsers[socket.id]?.name} 發送 login 事件 ， 加入了all_chatroom`)
     io.of('/all_chatroom').emit('loginEvent', chattingUsers[socket.id])
     io.of('/all_chatroom').emit('broadcast', chattingUsers)
   })
@@ -25,14 +24,13 @@ io.of('/all_chatroom').on('connection', async socket => {
   // -------------- Logout 事件
   socket.on('disconnect', () => {
     // 在前後端都留下訊息
-    console.log(`${chattingUsers[socket.id]?.name} 離開了 all_chatroom`)
     io.of('/all_chatroom').emit('logoutEvent', chattingUsers[socket.id])
     // remove saved socket from users object
     delete chattingUsers[socket.id]
     io.of('/all_chatroom').emit('broadcast', chattingUsers)
   })
 
-  // --------------   監聽 --------------   chat message emit 的任何訊息
+  // -------------- chat message 時時更新聊天室
   socket.on('chat message', receivedMsg => {
     const returnObj = {
       id: chattingUsers[socket.id].id,
