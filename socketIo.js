@@ -44,7 +44,7 @@ io.of('/all_chatroom').on('connection', async socket => {
   })
 })
 
-server.listen(PORT, () => {
+server.listen(process.env.PORT || PORT, () => {
   console.log(`listening on *:${PORT}`)
 })
 
