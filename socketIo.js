@@ -6,6 +6,7 @@ const { Server } = require('socket.io')
 const io = new Server(server)
 const { User } = require('./models')
 
+const PORT = 3000
 const chattingUsers = {}
 
 // 建立 all chatroom 連線
@@ -43,8 +44,8 @@ io.of('/all_chatroom').on('connection', async socket => {
   })
 })
 
-server.listen(3000, () => {
-  console.log('listening on *:3000')
+server.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`)
 })
 
 module.exports = { io }
